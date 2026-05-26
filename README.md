@@ -1,12 +1,47 @@
 # CodeRun!
 CodeRun is an educational 2D platformer game created using Unity Hub seamlessly integrated into a Windows Forms (WinForms) application.
 
+<!-- PLACEHOLDER: Showcase GIF/Image -->
+<!-- WHERE: Right below the main title. -->
+<!-- WHAT: A GIF showing the entire application flow: opening the app, viewing the story, selecting a difficulty, and playing the embedded game. -->
+![CodeRun Application Showcase (GIF Placeholder)](docs/screenshots/showcase.gif)
+
 # CodeRun Launcher & Game Host
 A modern Windows Forms (WinForms) application targeting .NET 10.0 that acts as a wrapper, launcher, and host for a Unity-based game. It dynamically embeds precompiled Unity game windows into C# WinForms containers using Win32 API P/Invoke calls and redirects keyboard and mouse control inputs to the embedded Unity process.
 
 ## 🚀 Key Features
-*   **Integrated Launcher UI**: Provides a clean main menu (`HomeTab`), difficulty selection (`PlayDifficulties`), player registration (`PlayerName`), and a credits panel (`CreditsForm`).
+
+*   **Integrated Launcher UI**: Provides a clean main menu (`HomeTab`), introduction video (`Story`), difficulty selection (`PlayDifficulties`), player registration (`PlayerName`), and a credits panel (`CreditsForm`).
+    
+    <!-- PLACEHOLDERS: UI Screen Gallery -->
+    <!-- WHERE: Under the Launcher UI feature description. -->
+    <!-- WHAT: Grid or list of screenshots representing the individual forms. -->
+    <table>
+      <tr>
+        <td><b>Main Menu (HomeTab)</b></td>
+        <td><b>Intro Video (Story)</b></td>
+      </tr>
+      <tr>
+        <td><img src="docs/screenshots/hometab.png" alt="HomeTab Main Menu (Image Placeholder)" width="350"/></td>
+        <td><img src="docs/screenshots/story.png" alt="Story Intro Video (Image Placeholder)" width="350"/></td>
+      </tr>
+      <tr>
+        <td><b>Difficulty Selector (PlayDifficulties)</b></td>
+        <td><b>Registration (PlayerName)</b></td>
+      </tr>
+      <tr>
+        <td><img src="docs/screenshots/difficulties.png" alt="PlayDifficulties Screen (Image Placeholder)" width="350"/></td>
+        <td><img src="docs/screenshots/playername.png" alt="PlayerName Registration (Image Placeholder)" width="350"/></td>
+      </tr>
+    </table>
+
 *   **Embedded Unity Player**: Instantiates separate Unity processes for different game modes (`Easy`, `Medium`, and `Hard`) and binds the Unity game window inside the WinForms panel using Win32 parent-child window manipulation.
+    
+    <!-- PLACEHOLDER: Embedded Gameplay GIF -->
+    <!-- WHERE: Under the Embedded Unity Player feature description. -->
+    <!-- WHAT: A GIF showing actual keyboard controls moving the pixel character inside the WinForms embedded container. -->
+    ![Embedded Unity Gameplay (GIF Placeholder)](docs/screenshots/unity_gameplay.gif)
+
 *   **Memory & Process Leak Protection**: Form transitions are managed using parent references (hiding/showing existing instances) rather than instantiating new windows. This guarantees that closing the main form completely terminates the background application process.
 *   **Input Translation & Forwarding**:
     *   Intercepts mouse clicks and keyboard commands within the WinForms container.
@@ -35,7 +70,6 @@ graph TD
     UnityExe -->|Embed Into Form| PlayerName
     PlayerName -.->|P/Invoke Input Redirection| UnityExe
     UnityExe -.->|Signal BACK_TO_HOME| AppDataDir
-    PlayerName -->|Watch File Signal| AppDataDir
 ```
 
 ### Directory Structure
@@ -99,6 +133,11 @@ When the user clicks in the bottom quiz panel region of the game window, the coo
 *   **Top-Right Quadrant**: Sends key `2` (`0x32`)
 *   **Bottom-Left Quadrant**: Sends key `3` (`0x33`)
 *   **Bottom-Right Quadrant**: Sends key `4` (`0x34`)
+
+<!-- PLACEHOLDER: Quiz Click-to-Key Mapping Diagram/Visual -->
+<!-- WHERE: Under the quiz quadrant list. -->
+<!-- WHAT: A mockup overlay image demonstrating the 4 click areas and their mapped keys. -->
+![Quiz click area mappings (Image Placeholder)](docs/screenshots/quiz_mapping.png)
 
 ### 4. Game Exit and Return Signal
 The launcher tracks when the Unity game completes or exits using two checks:
