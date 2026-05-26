@@ -1,4 +1,8 @@
-# Treat GameScene build directories as vendor code so they don't count towards stats
+# Ignore all Unity game scene build folders
 GameSceneEasyMode/** linguist-vendored
 GameSceneMediumMode/** linguist-vendored
 GameSceneHardMode/** linguist-vendored
+
+# Explicitly ignore ASP.NET pages from the Mono/Unity runtime
+*.aspx linguist-vendored
+*.aspx linguist-detectable=false
