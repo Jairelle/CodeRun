@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HomeTab));
             button2 = new Button();
-            button3 = new Button();
+            Story = new Button();
             pictureBox1 = new PictureBox();
             PlayDiff = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -54,22 +54,23 @@
             button2.UseVisualStyleBackColor = false;
             button2.Click += button2_Click;
             // 
-            // button3
+            // Story
             // 
-            button3.Anchor = AnchorStyles.Left;
-            button3.BackColor = Color.Transparent;
-            button3.BackgroundImage = (Image)resources.GetObject("button3.BackgroundImage");
-            button3.BackgroundImageLayout = ImageLayout.Zoom;
-            button3.FlatAppearance.BorderSize = 0;
-            button3.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            button3.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.ForeColor = Color.Transparent;
-            button3.Location = new Point(100, 195);
-            button3.Name = "button3";
-            button3.Size = new Size(479, 264);
-            button3.TabIndex = 3;
-            button3.UseVisualStyleBackColor = false;
+            Story.Anchor = AnchorStyles.Left;
+            Story.BackColor = Color.Transparent;
+            Story.BackgroundImage = (Image)resources.GetObject("Story.BackgroundImage");
+            Story.BackgroundImageLayout = ImageLayout.Zoom;
+            Story.FlatAppearance.BorderSize = 0;
+            Story.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            Story.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            Story.FlatStyle = FlatStyle.Flat;
+            Story.ForeColor = Color.Transparent;
+            Story.Location = new Point(100, 195);
+            Story.Name = "Story";
+            Story.Size = new Size(479, 264);
+            Story.TabIndex = 3;
+            Story.UseVisualStyleBackColor = false;
+            Story.Click += button3_Click;
             // 
             // pictureBox1
             // 
@@ -112,7 +113,7 @@
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1405, 753);
             Controls.Add(PlayDiff);
-            Controls.Add(button3);
+            Controls.Add(Story);
             Controls.Add(button2);
             Controls.Add(pictureBox1);
             DoubleBuffered = true;
@@ -128,7 +129,7 @@
 
         #endregion
         private Button button2;
-        private Button button3;
+        private Button Story;
         private PictureBox pictureBox1;
         private Button PlayDiff;
     }

@@ -1,3 +1,4 @@
+using CodeRun;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -153,7 +154,7 @@ namespace WinFormsApp1
         {
 
             // 1. Create the form object
-            PlayDifficulties difficulties = new PlayDifficulties();
+            PlayDifficulties difficulties = new PlayDifficulties(this);
 
             // 2. Optional: Make it look integrated (same as Credits)
             difficulties.FormBorderStyle = FormBorderStyle.None;
@@ -162,11 +163,25 @@ namespace WinFormsApp1
 
             // 3. Show it
             difficulties.Show();//Updated
+            this.Hide();
         }
 
         private void pictureBox1_Click_2(object sender, EventArgs e)
         {
 
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            // 1. Create an instance of your 'Story' form
+            Story storyScreen = new Story();
+
+            // 2. Show the story screen
+            storyScreen.Show();
+
+            // 3. Hide the main menu
+            this.Hide();
+        }
     }
-}
+    }
+//}

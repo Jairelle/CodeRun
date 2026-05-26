@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -41,6 +41,7 @@ namespace WinFormsApp1
         private IntPtr unityHwnd = IntPtr.Zero;
         private bool gameRunning = false;
         private string selectedDifficulty;
+        private HomeTab parentHome;
 
         // ── NEW: signal watcher ───────────────────────────────────────────
         private System.Windows.Forms.Timer unityWatchTimer;
@@ -51,9 +52,10 @@ namespace WinFormsApp1
         );
         // ─────────────────────────────────────────────────────────────────
 
-        public PlayerName(string difficulty = "Easy")
+        public PlayerName(HomeTab home, string difficulty = "Easy")
         {
             InitializeComponent();
+            parentHome = home;
             selectedDifficulty = difficulty;
             this.KeyPreview = true;
             this.Load += PlayerName_Load;
@@ -208,8 +210,7 @@ namespace WinFormsApp1
                     if (unityProcess != null && !unityProcess.HasExited)
                         unityProcess.Kill();
 
-                    HomeTab mainMenu = new HomeTab();  // ← opens THIS Form1 screen
-                    mainMenu.Show();
+                    parentHome.Show();
                     this.Close();
                     return;
                 }
@@ -220,8 +221,7 @@ namespace WinFormsApp1
                 unityWatchTimer.Stop();
                 gameRunning = false;
 
-                HomeTab mainMenu = new HomeTab();
-                mainMenu.Show();
+                parentHome.Show();
                 this.Close();
             }
         }

@@ -13,5 +13,8 @@
     <Compile Update="PlayerName.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Story.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

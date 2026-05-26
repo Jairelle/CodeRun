@@ -1,0 +1,4 @@
+# Treat GameScene build directories as vendor code so they don't count towards stats
+GameSceneEasyMode/** linguist-vendored
+GameSceneMediumMode/** linguist-vendored
+GameSceneHardMode/** linguist-vendored
