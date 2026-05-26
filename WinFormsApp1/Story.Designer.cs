@@ -1,4 +1,4 @@
-﻿namespace CodeRun
+namespace CodeRun
 {
     partial class Story
     {
@@ -28,10 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
+            AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Story));
             BackButtonStory = new PictureBox();
+            pageSetupDialog1 = new PageSetupDialog();
+            axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
+            ((System.ComponentModel.ISupportInitialize)axWindowsMediaPlayer1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)BackButtonStory).BeginInit();
             SuspendLayout();
+            // 
+            // axWindowsMediaPlayer1
+            // 
+            axWindowsMediaPlayer1.Dock = DockStyle.Fill;
+            axWindowsMediaPlayer1.Enabled = true;
+            axWindowsMediaPlayer1.Location = new Point(0, 0);
+            axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
+            axWindowsMediaPlayer1.OcxState = (AxHost.State)resources.GetObject("axWindowsMediaPlayer1.OcxState");
+            axWindowsMediaPlayer1.Size = new Size(1373, 669);
+            axWindowsMediaPlayer1.TabIndex = 8;
+            axWindowsMediaPlayer1.Enter += axWindowsMediaPlayer1_Enter;
             // 
             // BackButtonStory
             // 
@@ -39,9 +54,9 @@
             BackButtonStory.BackColor = Color.Transparent;
             BackButtonStory.BackgroundImageLayout = ImageLayout.Center;
             BackButtonStory.Image = (Image)resources.GetObject("BackButtonStory.Image");
-            BackButtonStory.Location = new Point(1262, 12);
+            BackButtonStory.Location = new Point(1267, 12);
             BackButtonStory.Name = "BackButtonStory";
-            BackButtonStory.Size = new Size(94, 40);
+            BackButtonStory.Size = new Size(94, 38);
             BackButtonStory.SizeMode = PictureBoxSizeMode.StretchImage;
             BackButtonStory.TabIndex = 7;
             BackButtonStory.TabStop = false;
@@ -51,11 +66,15 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1408, 763);
+            ClientSize = new Size(1373, 669);
             Controls.Add(BackButtonStory);
+            Controls.Add(axWindowsMediaPlayer1);
             Name = "Story";
             Text = "Story";
             WindowState = FormWindowState.Maximized;
+            FormClosed += Story_FormClosed;
+            Load += Story_Load;
+            ((System.ComponentModel.ISupportInitialize)axWindowsMediaPlayer1).EndInit();
             ((System.ComponentModel.ISupportInitialize)BackButtonStory).EndInit();
             ResumeLayout(false);
         }
@@ -63,5 +82,7 @@
         #endregion
 
         private PictureBox BackButtonStory;
+        private PageSetupDialog pageSetupDialog1;
+        private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer1;
     }
 }

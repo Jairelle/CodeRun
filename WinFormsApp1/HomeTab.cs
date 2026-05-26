@@ -7,35 +7,55 @@ using System.Windows.Forms;
 
 namespace WinFormsApp1
 {
+    // The main home screen/launcher of our application.
     public partial class HomeTab : Form
     {
+        // ── Win32 API Imports ────────────────────────────────────────────────
+        // We use native Windows DLLs (user32 and kernel32) to do things that standard 
+        // WinForms code can't do—specifically, stealing the Unity game window and 
+        // stitching it directly into our Form's interface.
+        
+        // SetParent lets us force the Unity window to become a child control of our form.
         [DllImport("user32.dll")] static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
+        
+        // MoveWindow helps us resize and reposition the Unity window to perfectly fit inside our form.
         [DllImport("user32.dll")] static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
+        
+        // SetFocus forces Windows to focus the Unity control so it starts receiving inputs.
         [DllImport("user32.dll")] static extern IntPtr SetFocus(IntPtr hWnd);
+        
+        // SetForegroundWindow brings the Unity window to the front of the drawing stack.
         [DllImport("user32.dll")] static extern bool SetForegroundWindow(IntPtr hWnd);
+        
+        // AttachThreadInput connects the input processing of our main form thread to the Unity game thread.
+        // Without this, keyboard and mouse inputs wouldn't register inside the embedded game.
         [DllImport("user32.dll")] static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
+        
+        // GetWindowThreadProcessId helps us figure out which thread belongs to the Unity window.
         [DllImport("user32.dll")] static extern uint GetWindowThreadProcessId(IntPtr hWnd, IntPtr ProcessId);
+        
+        // GetCurrentThreadId gets the ID of our C# Windows Forms main thread.
         [DllImport("kernel32.dll")] static extern uint GetCurrentThreadId();
-        //Gem
-        [DllImport("user32.dll")]
-        static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        
+        // SendMessage lets us send low-level window messages to control the Unity window state.
+        [DllImport("user32.dll")] static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
         const int WM_ACTIVATE = 0x0006;
         const int WA_CLICKACTIVE = 2;
-        //START
-        private Process unityProcess;
-        private bool gameRunning = false;
+        
+        // ── State Variables ──────────────────────────────────────────────────
+        private Process unityProcess; // Holds the reference to the running Unity game process.
+        private bool gameRunning = false; // Flag to keep track of whether the game is currently active.
 
         public HomeTab()
         {
             InitializeComponent();
-
-            // Make buttons children of the PictureBox so transparency works
-            /*button1.Parent = pictureBox1;
-            button2.Parent = pictureBox1;
-            button3.Parent = pictureBox1;*/
         }
 
+        // ── Unity Input and Focus Management ──────────────────────────────────
+        // This is a helper method to force focus onto the Unity game.
+        // In embedded applications, focus gets lost easily when clicking around.
+        // We link the threads and force the OS to direct input focus to the Unity window.
         private void FocusUnity()
         {
             if (unityProcess == null || unityProcess.HasExited) return;
@@ -43,82 +63,48 @@ namespace WinFormsApp1
             IntPtr unityHwnd = unityProcess.MainWindowHandle;
             if (unityHwnd == IntPtr.Zero) return;
 
+            // Find our main thread ID and the Unity thread ID
             uint currentThread = GetCurrentThreadId();
             uint unityThread = GetWindowThreadProcessId(unityHwnd, IntPtr.Zero);
 
+            // Connect input queues, set focus, and then disconnect them cleanly
             AttachThreadInput(currentThread, unityThread, true);
             SetForegroundWindow(unityHwnd);
             SetFocus(unityHwnd);
             AttachThreadInput(currentThread, unityThread, false);
         }
-        //Gem
-        /*private void FocusUnity()
-        {
-            if (unityProcess == null || unityProcess.HasExited) return;
-            IntPtr unityHwnd = unityProcess.MainWindowHandle;
 
-            // Force Windows to treat the Unity window as "active" within the parent
-            SendMessage(unityHwnd, WM_ACTIVATE, WA_CLICKACTIVE, 0);
-            SetFocus(unityHwnd);
-        }*/
-
-        // Clicking anywhere on the form refocuses Unity
+        // If the user clicks anywhere on our Form background, we redirect focus back to Unity
+        // so they don't lose control of the player.
         protected override void OnMouseClick(MouseEventArgs e)
         {
             FocusUnity();
             base.OnMouseClick(e);
         }
 
-        // Switching back to the app refocuses Unity
+        // When the user alt-tabs away and then switches back to our application,
+        // automatically refocus the Unity window if a game session is currently active.
         protected override void OnActivated(EventArgs e)
         {
             base.OnActivated(e);
             if (gameRunning) FocusUnity();
         }
 
+        // Leftover handler from design changes (unused)
         private void button1_Click(object sender, EventArgs e)
         {
-            /*string gamePath = @"C:\Users\oreto\source\repos\WinFormsApp1\GameScene2\My project (2).exe";
-
-            if (!System.IO.File.Exists(gamePath))
-            {
-                MessageBox.Show("Game executable not found at: " + gamePath);
-                return;
-            }
-
-            try
-            {
-                ProcessStartInfo psi = new ProcessStartInfo(gamePath);
-                psi.Arguments = "-parentHWND " + this.Handle.ToInt32() +
-                                " -screen-width " + this.ClientSize.Width +
-                                " -screen-height " + this.ClientSize.Height;
-                psi.UseShellExecute = false;
-                psi.CreateNoWindow = true;
-
-                unityProcess = Process.Start(psi);
-                unityProcess.WaitForInputIdle();
-                Thread.Sleep(1000);
-
-                SetParent(unityProcess.MainWindowHandle, this.Handle);
-                MoveWindow(unityProcess.MainWindowHandle, 0, 0, this.ClientSize.Width, this.ClientSize.Height, true);
-
-                button1.Visible = false;
-                gameRunning = true;
-
-                FocusUnity();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error launching game: " + ex.Message);
-            }*/
         }
 
+        // Keeps the Unity game window filling the form even if the user resizes the main window.
         private void Form1_Resize(object sender, EventArgs e)
         {
             if (unityProcess != null && !unityProcess.HasExited)
                 MoveWindow(unityProcess.MainWindowHandle, 0, 0, this.ClientSize.Width, this.ClientSize.Height, true);
         }
 
+        // Critical safety cleanup: If the user closes the WinForms launcher, we MUST 
+        // make sure the embedded Unity process is killed as well, otherwise it will
+        // run in the background forever as a zombie process.
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             if (unityProcess != null && !unityProcess.HasExited)
@@ -128,60 +114,53 @@ namespace WinFormsApp1
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-
         }
 
+        // Open the Credits dialog
         private void button2_Click(object sender, EventArgs e)
         {
-            // Create an instance of your new form
             CreditsForm credits = new CreditsForm();
-
-            // Show the form
-            credits.ShowDialog();
+            credits.ShowDialog(); // ShowDialog makes it a modal pop-up (prevents interacting with menu behind it)
         }
 
         private void pictureBox1_Click_1(object sender, EventArgs e)
         {
-
         }
 
+        // Runs when the Home Tab form is loaded. We hide the bottom gray bar control
+        // here to ensure the pixel art background extends all the way down.
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            pictureBox2.Visible = false;
         }
 
+        // Handles the Play button click: goes to the difficulty selection screen
         private void PlayDiff_Click(object sender, EventArgs e)
         {
-
-            // 1. Create the form object
+            // Create the difficulty screen and pass 'this' (the current HomeTab) 
+            // so it can show us again when the user backs out.
             PlayDifficulties difficulties = new PlayDifficulties(this);
 
-            // 2. Optional: Make it look integrated (same as Credits)
+            // Make it match our window style and fill the space
             difficulties.FormBorderStyle = FormBorderStyle.None;
             difficulties.StartPosition = FormStartPosition.CenterParent;
-            difficulties.Size = this.Size; // If you want it to be full size
+            difficulties.Size = this.Size;
 
-            // 3. Show it
-            difficulties.Show();//Updated
-            this.Hide();
+            difficulties.Show();
+            this.Hide(); // Hide ourselves so only the difficulty selection is visible
         }
 
         private void pictureBox1_Click_2(object sender, EventArgs e)
         {
-
         }
 
+        // Handles the Story button click: opens the animated/media intro screen
         private void button3_Click(object sender, EventArgs e)
         {
-            // 1. Create an instance of your 'Story' form
-            Story storyScreen = new Story();
-
-            // 2. Show the story screen
+            // Create the Story screen and pass 'this' home screen so we can return here
+            Story storyScreen = new Story(this);
             storyScreen.Show();
-
-            // 3. Hide the main menu
-            this.Hide();
+            this.Hide(); // Hide the main menu
         }
     }
-    }
-//}
+}

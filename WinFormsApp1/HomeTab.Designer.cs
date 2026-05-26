@@ -33,7 +33,11 @@
             Story = new Button();
             pictureBox1 = new PictureBox();
             PlayDiff = new Button();
+            pictureBox2 = new PictureBox();
+            pictureBox3 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             SuspendLayout();
             // 
             // button2
@@ -47,7 +51,7 @@
             button2.FlatAppearance.MouseOverBackColor = Color.Transparent;
             button2.FlatStyle = FlatStyle.Flat;
             button2.ForeColor = Color.Transparent;
-            button2.Location = new Point(845, 195);
+            button2.Location = new Point(840, 268);
             button2.Name = "button2";
             button2.Size = new Size(479, 264);
             button2.TabIndex = 2;
@@ -65,7 +69,7 @@
             Story.FlatAppearance.MouseOverBackColor = Color.Transparent;
             Story.FlatStyle = FlatStyle.Flat;
             Story.ForeColor = Color.Transparent;
-            Story.Location = new Point(100, 195);
+            Story.Location = new Point(95, 268);
             Story.Name = "Story";
             Story.Size = new Size(479, 264);
             Story.TabIndex = 3;
@@ -97,12 +101,34 @@
             PlayDiff.FlatAppearance.MouseOverBackColor = Color.Transparent;
             PlayDiff.FlatStyle = FlatStyle.Flat;
             PlayDiff.ForeColor = Color.Transparent;
-            PlayDiff.Location = new Point(485, 206);
+            PlayDiff.Location = new Point(480, 279);
             PlayDiff.Name = "PlayDiff";
             PlayDiff.Size = new Size(492, 243);
             PlayDiff.TabIndex = 5;
             PlayDiff.UseVisualStyleBackColor = false;
             PlayDiff.Click += PlayDiff_Click;
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Dock = DockStyle.Bottom;
+            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
+            pictureBox2.Location = new Point(0, 665);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(1405, 88);
+            pictureBox2.TabIndex = 6;
+            pictureBox2.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.Anchor = AnchorStyles.Top;
+            pictureBox3.BackColor = Color.Transparent;
+            pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
+            pictureBox3.Location = new Point(146, 135);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(1152, 178);
+            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox3.TabIndex = 7;
+            pictureBox3.TabStop = false;
             // 
             // HomeTab
             // 
@@ -112,6 +138,8 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1405, 753);
+            Controls.Add(pictureBox3);
+            Controls.Add(pictureBox2);
             Controls.Add(PlayDiff);
             Controls.Add(Story);
             Controls.Add(button2);
@@ -124,6 +152,8 @@
             Load += Form1_Load;
             Resize += Form1_Resize;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ResumeLayout(false);
         }
 
@@ -132,5 +162,7 @@
         private Button Story;
         private PictureBox pictureBox1;
         private Button PlayDiff;
+        private PictureBox pictureBox2;
+        private PictureBox pictureBox3;
     }
 }
