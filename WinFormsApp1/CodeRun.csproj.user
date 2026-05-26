@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Compile Update="CreditsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="HomeTab.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PlayDifficulties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PlayerName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>
