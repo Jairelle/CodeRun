@@ -1,6 +1,9 @@
 # CodeRun!
 CodeRun is an educational 2D platformer game created using Unity Hub seamlessly integrated into a Windows Forms (WinForms) application.
 
+<img width="960" height="540" alt="708652669_2939843769552047_1844106713976823437_n" src="https://github.com/user-attachments/assets/8833f7c6-0e98-470a-b061-0d87a7adfdb6" />
+
+
 <!-- PLACEHOLDER: Showcase GIF/Image -->
 <!-- WHERE: Right below the main title. -->
 <!-- WHAT: A GIF showing the entire application flow: opening the app, viewing the story, selecting a difficulty, and playing the embedded game. -->
@@ -22,16 +25,23 @@ A modern Windows Forms (WinForms) application targeting .NET 10.0 that acts as a
         <td><b>Intro Video (Story)</b></td>
       </tr>
       <tr>
-        <td><img src="docs/screenshots/hometab.png" alt="HomeTab Main Menu (Image Placeholder)" width="350"/></td>
-        <td><img src="docs/screenshots/story.png" alt="Story Intro Video (Image Placeholder)" width="350"/></td>
+        <td>
+      <img src="https://github.com/user-attachments/assets/15d40b8a-75f6-46d0-aa88-47ba5fdf206e" alt="HomeTab Main Menu" width="350">
+    </td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/b320fc68-1564-4ba3-bb4c-cc9712b36799" alt="Story Intro Video" width="350">
+    </td>
       </tr>
       <tr>
         <td><b>Difficulty Selector (PlayDifficulties)</b></td>
         <td><b>Registration (PlayerName)</b></td>
       </tr>
       <tr>
-        <td><img src="docs/screenshots/difficulties.png" alt="PlayDifficulties Screen (Image Placeholder)" width="350"/></td>
-        <td><img src="docs/screenshots/playername.png" alt="PlayerName Registration (Image Placeholder)" width="350"/></td>
+        <td>
+      <img src="https://github.com/user-attachments/assets/497142cd-b6e7-489a-8b18-9c962601e306" alt="HomeTab Main Menu" width="350">
+    </td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/0d7b11db-c7a3-42fd-960f-c6d4dc4954b7" alt="Story Intro Video" width="350">
       </tr>
     </table>
 
@@ -60,17 +70,10 @@ A modern Windows Forms (WinForms) application targeting .NET 10.0 that acts as a
 
 ---
 
-## 🏗 Project Architecture
-```mermaid
-graph TD
-    HomeTab[HomeTab Menu] -->|Click Play| PlayDifficulties[Difficulty Selector]
-    PlayDifficulties -->|Select Difficulty| PlayerName[Player Registration]
-    PlayerName -->|Save Player Info| AppDataDir[(%APPDATA%/BridgeGame)]
-    PlayerName -->|Launch Game Executable| UnityExe[Unity Executable]
-    UnityExe -->|Embed Into Form| PlayerName
-    PlayerName -.->|P/Invoke Input Redirection| UnityExe
-    UnityExe -.->|Signal BACK_TO_HOME| AppDataDir
-```
+## 🏗 Project Architecture (Flowchart)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/7e57b33a-ae4f-4ee2-9a9d-7db87e211096" alt="Centered Image" width="511" height="571">
+</p>
 
 ### Directory Structure
 ```text
@@ -137,7 +140,6 @@ When the user clicks in the bottom quiz panel region of the game window, the coo
 <!-- PLACEHOLDER: Quiz Click-to-Key Mapping Diagram/Visual -->
 <!-- WHERE: Under the quiz quadrant list. -->
 <!-- WHAT: A mockup overlay image demonstrating the 4 click areas and their mapped keys. -->
-![Quiz click area mappings (Image Placeholder)](docs/screenshots/quiz_mapping.png)
 
 ### 4. Game Exit and Return Signal
 The launcher tracks when the Unity game completes or exits using two checks:
